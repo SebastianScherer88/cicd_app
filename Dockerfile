@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat May 21 11:58:13 2022
-
-@author: bettmensch
-"""
-
-
 FROM python:3.10.4
 
 # 
