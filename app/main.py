@@ -8,6 +8,7 @@ Created on Sat May 21 11:52:04 2022
 from typing import Union
 import uvicorn
 from fastapi import FastAPI
+import os
 
 app = FastAPI()
 
@@ -23,4 +24,4 @@ def read_item(item_id: int, q: Union[str, None] = None):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get('PORT', 8080)))
