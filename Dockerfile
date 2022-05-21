@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir --upgrade -r /repository/requirements.txt
 COPY ./app /repository/app
 
 # 
-CMD ["python", "main.py"]
+CMD ["python", "app/main.py"]
