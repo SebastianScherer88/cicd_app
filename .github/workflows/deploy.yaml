@@ -2,7 +2,7 @@ name: build and deploy to cloud run
 on:
   push:
     branches:
-      - master
+      - development
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
   SERVICE: cicd-sample-app
