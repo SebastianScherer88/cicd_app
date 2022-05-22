@@ -10,7 +10,7 @@ env:
   
 jobs:
   deploy:
-    environment: 'development'
+    environment: 'development_environment'
     runs-on: ubuntu-latest
     
     steps:
