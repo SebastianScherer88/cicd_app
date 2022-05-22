@@ -1,4 +1,4 @@
-name: build and deploy to cloud run
+name: Build and deploy to production GCP project
 on:
   push:
     branches:
@@ -10,7 +10,7 @@ env:
   
 jobs:
   deploy:
-    environment: 'development_environment'
+    environment: 'production_environment'
     runs-on: ubuntu-latest
     
     steps:
