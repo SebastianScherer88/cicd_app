@@ -2,7 +2,7 @@ name: Build and deploy to staging GCP project
 on:
   push:
     branches:
-      - development
+      - staging
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
   SERVICE: cicd-sample-app

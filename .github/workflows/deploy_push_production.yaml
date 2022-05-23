@@ -2,7 +2,7 @@ name: Build and deploy to production GCP project
 on:
   push:
     branches:
-      - development
+      - production
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
   SERVICE: cicd-sample-app
