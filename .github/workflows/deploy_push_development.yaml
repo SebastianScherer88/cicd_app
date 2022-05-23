@@ -45,7 +45,7 @@ jobs:
       
     # Push Container to registry
     - name: Push Container
-        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
+      run: docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
       
     - name: Deploy to Cloud Run
       run: |-
