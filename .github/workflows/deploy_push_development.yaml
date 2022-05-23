@@ -37,7 +37,7 @@ jobs:
         
     # Run unit tests
     - name: Run unit tests in container
-      run: docker run -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} /bin/bash -c "python app/main.py > log.txt 2>&1 & pytest tests/tests_unit/"
+      run: docker run -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} pytest tests/tests_unit/
         
     # Run integration tests
     - name: Run integration tests in container

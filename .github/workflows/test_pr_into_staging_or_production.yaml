@@ -23,7 +23,7 @@ jobs:
       
     # run container with unit test command
     - name: Run unit tests
-      run: docker run -t temp /bin/bash -c "python app/main.py > log.txt 2>&1 & pytest tests/tests_unit/"
+      run: docker run -t temp pytest tests/tests_unit/
     
     # run container with integration test command
     - name: Run integration tests
