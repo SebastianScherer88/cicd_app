@@ -12,5 +12,11 @@ RUN pip install --no-cache-dir --upgrade -r /repository/requirements.txt
 # 
 COPY ./app /repository/app
 
+#
+COPY ./tests /repository/tests
+
+#
+ENV PYTHONPATH /repository
+
 # 
 CMD ["python", "app/main.py"]
