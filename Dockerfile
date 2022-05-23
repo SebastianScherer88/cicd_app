@@ -16,7 +16,7 @@ COPY ./app /repository/app
 COPY ./tests /repository/tests
 
 #
-ENV PYTHONPATH = /repository
+ENV PYTHONPATH /repository
 
 # 
 CMD ["python", "app/main.py"]
