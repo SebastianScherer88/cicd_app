@@ -1,8 +1,8 @@
-name: build and deploy to cloud run
+name: Build and deploy to development GCP project
 on:
   push:
     branches:
-      - master
+      - development
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
   SERVICE: cicd-sample-app
@@ -10,7 +10,7 @@ env:
   
 jobs:
   deploy:
-    environment: 'Github actions environment'
+    environment: 'development_environment'
     runs-on: ubuntu-latest
     
     steps:
@@ -32,10 +32,20 @@ jobs:
     - name: Authorize Docker push
       run: gcloud auth configure-docker
       
-    - name: Build and Push Container
-      run: |-
-        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} .
-        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
+    - name: Build Container image
+      run: docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} .
+        
+    # Run unit tests
+    - name: Run unit tests in container
+      run: docker run -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} pytest tests/tests_unit/
+        
+    # Run integration tests
+    - name: Run integration tests in container
+      run: docker run -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} /bin/bash -c "python app/main.py > log.txt 2>&1 & pytest tests/tests_integration/"
+      
+    # Push Container to registry
+    - name: Push Container
+      run: docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
       
     - name: Deploy to Cloud Run
       run: |-

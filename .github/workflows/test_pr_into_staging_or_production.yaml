@@ -1,0 +1,30 @@
+name: Test PR content into staging or production
+on:
+  pull_request:
+    branches:
+      - staging, production
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+  SERVICE: cicd-sample-app
+  REGION: us-central1
+  
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    # build container image from source branch  
+    - name: Build Container
+      run: |-
+        docker build -t temp .
+      
+    # run container with unit test command
+    - name: Run unit tests
+      run: docker run -t temp pytest tests/tests_unit/
+    
+    # run container with integration test command
+    - name: Run integration tests
+      run: docker run -t temp /bin/bash -c "python app/main.py > log.txt 2>&1 & pytest tests/tests_integration/"
