@@ -32,11 +32,19 @@ jobs:
     - name: Authorize Docker push
       run: gcloud auth configure-docker
       
-    - name: Build, Test & Push Container
-      run: |-
-        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} .
-        docker run -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} nohup python app/main.py & && pytest tests/tests_unit/
-        docker run -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} nohup python app/main.py & && pytest tests/tests_integration/
+    - name: Build Container image
+      run: docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} .
+        
+    # Run unit tests
+    - name: Run unit tests in container
+      run: docker run -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} /bin/bash -c "python app/main.py && pytest tests/tests_unit/"
+        
+    # Run integration tests
+    - name: Run integration tests in container
+      run: docker run -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} /bin/bash -c "python app/main.py && pytest tests/tests_integration/"
+      
+    # Push Container to registry
+    - name: Push Container
         docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
       
     - name: Deploy to Cloud Run
