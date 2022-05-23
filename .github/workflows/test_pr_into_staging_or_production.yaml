@@ -2,7 +2,8 @@ name: Test PR content into staging or production
 on:
   pull_request:
     branches:
-      - staging, production
+      - staging
+      - production
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
   SERVICE: cicd-sample-app
