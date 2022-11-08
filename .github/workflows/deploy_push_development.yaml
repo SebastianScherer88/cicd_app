@@ -54,4 +54,4 @@ jobs:
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
           --platform "managed" \
           --quiet \
-          --maxScale 10
+          --max-instances 10
