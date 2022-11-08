@@ -14,7 +14,7 @@ app = FastAPI()
 
 def generate_message():
     
-    return "Hello! This is a change!"
+    return "Hello! This is another change for the CI/CD demo!"
 
 @app.get("/")
 def read_root():
